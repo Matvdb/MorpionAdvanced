@@ -45,21 +45,18 @@ class Morpion {
     }
   }
 
-  static double probaVictoireJ1(){
+  static String probaVictoireJ1(){
     List<double> probabilites = calculerProbabilite(scoreJ1, scoreJ2);
     double probabiliteJoueur1 = probabilites[0];
-    return probabiliteJoueur1;
+    String result = probabiliteJoueur1.toStringAsFixed(2);
+    return result;
   }
 
-  static double probaVictoireJ2(){
+  static String probaVictoireJ2(){
     List<double> probabilites = calculerProbabilite(scoreJ1, scoreJ2);
     double probabiliteJoueur2 = probabilites[1];
-    if(probabilites == null){
-      probabiliteJoueur2 = 0; 
-    } else {
-      double probabiliteJoueur2 = probabilites[1];
-    }
-    return probabiliteJoueur2;
+    String result = probabiliteJoueur2.toStringAsFixed(2);
+    return result;
   }
 
   

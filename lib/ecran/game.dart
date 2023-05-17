@@ -167,12 +167,12 @@ class _GameState extends State<Game> {
                         Text(Morpion.scoreJ2.toString()),
                       ],
                     ),
-                    Padding(padding: EdgeInsets.all(5)),
+                    Padding(padding: EdgeInsets.all(15)),
                     Text("Probabilité que " + Morpion.joueur1 + " gagne la partie:", style: TextStyle(fontSize: 13.0),),
-                    Text(Morpion.probaVictoireJ1().toString()),
+                    Text(Morpion.probaVictoireJ1().toString(), style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),),
                     Padding(padding: EdgeInsets.all(5)),
                     Text("Probabilité que " + Morpion.joueur2 + " gagne la partie:", style: TextStyle(fontSize: 13.0),),
-                    Text(Morpion.probaVictoireJ2().toString()),
+                    Text(Morpion.probaVictoireJ2().toString(), style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),),
                   ],
                 ),
               );
@@ -230,6 +230,7 @@ class _GameState extends State<Game> {
               ],
             ),
           ),
+          Padding(padding: EdgeInsets.all(10)),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
