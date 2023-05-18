@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Morpion',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
       home: const MyHomePage(title: "Morpion",),

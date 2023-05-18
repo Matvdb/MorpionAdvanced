@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:morpion/class/graphic.dart';
 import 'package:morpion/class/morpion.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:morpion/ecran/home.dart';
 
 class Game extends StatefulWidget {
   const Game({super.key});
@@ -85,9 +86,9 @@ class _GameState extends State<Game> {
           _messageFin(Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Le joueur "),
-              Text("$grille0 ", style: TextStyle(fontWeight: FontWeight.bold),),
-              Text("à gagner !"),
+              const Text("Le joueur "),
+              Text("$grille0 ", style: const TextStyle(fontWeight: FontWeight.bold),),
+              const Text("à gagner !"),
             ],
           ));
           Morpion.gameEnd = true;
@@ -124,6 +125,14 @@ class _GameState extends State<Game> {
               },
             ),
             TextButton(
+              child: const Text('Quitter'),
+              onPressed: () {
+                setState(() {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage(title: "Morpion")));
+                });
+              },
+            ),
+            TextButton(
               child: const Text('Recommencer'),
               onPressed: () {
                 setState(() {
@@ -156,8 +165,8 @@ class _GameState extends State<Game> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("Score de " + Morpion.joueur1),
-                        Text("Score de " + Morpion.joueur2),
+                        Text("Score de ${Morpion.joueur1}"),
+                        Text("Score de ${Morpion.joueur2}"),
                       ],
                     ),
                     Row(
@@ -167,12 +176,12 @@ class _GameState extends State<Game> {
                         Text(Morpion.scoreJ2.toString()),
                       ],
                     ),
-                    Padding(padding: EdgeInsets.all(15)),
-                    Text("Probabilité que " + Morpion.joueur1 + " gagne la partie:", style: TextStyle(fontSize: 13.0),),
-                    Text(Morpion.probaVictoireJ1().toString(), style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),),
-                    Padding(padding: EdgeInsets.all(5)),
-                    Text("Probabilité que " + Morpion.joueur2 + " gagne la partie:", style: TextStyle(fontSize: 13.0),),
-                    Text(Morpion.probaVictoireJ2().toString(), style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),),
+                    const Padding(padding: EdgeInsets.all(15)),
+                    Text("Probabilité que ${Morpion.joueur1} gagne la partie:", style: const TextStyle(fontSize: 13.0),),
+                    Text(Morpion.probaVictoireJ1().toString(), style: const TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),),
+                    const Padding(padding: EdgeInsets.all(5)),
+                    Text("Probabilité que ${Morpion.joueur2} gagne la partie:", style: const TextStyle(fontSize: 13.0),),
+                    Text(Morpion.probaVictoireJ2().toString(), style: const TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),),
                   ],
                 ),
               );
@@ -183,25 +192,27 @@ class _GameState extends State<Game> {
   }
 
   _restartButton(){
-    return ElevatedButton(
+    return IconButton(
       onPressed: (){
         setState(() {
           Morpion.initGame();
           Morpion.initScore();
         });
       }, 
-      child: const Text("Mise à zéro"),
+      icon: const Icon(Icons.restart_alt),
+      tooltip: "Mise à zéro",
     );
   }
 
   _statGame(){
-    return ElevatedButton(
+    return IconButton(
       onPressed: (){
         setState(() {
           _stats();
         });
       }, 
-      child: const Text("Statistiques"),
+      icon: const Icon(Icons.stacked_line_chart),
+      tooltip: "Statistiques",
     );
   }
 
@@ -209,70 +220,92 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Center(
-            child: Row(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Morpion - ",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  Text(Morpion.headerText().toString(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(10)),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text("Score de ${Morpion.joueur1}",
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  Text("Score de ${Morpion.joueur2}",
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(Morpion.scoreJ1.toString(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(Morpion.scoreJ2.toString(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(5)),
+            const Center(
+              child: Text("Meilleure score"),
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Morpion - ",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-                Text(Morpion.headerText().toString(),
-                  style: TextStyle(
+                Text(Morpion.getBestScore().toString(),
+                  style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-          ),
-          Padding(padding: EdgeInsets.all(10)),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            _gameContainer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Score de " + Morpion.joueur1,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-                Text("Score de " + Morpion.joueur2,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
+                _restartButton(),
+                const Padding(padding: EdgeInsets.all(5)),
+                _statGame(),
               ],
             ),
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(Morpion.scoreJ1.toString(),
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-                Text(Morpion.scoreJ2.toString(),
-                  style: TextStyle(
-                    fontSize: 18.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
-          ),
-          _gameContainer(),
-          _restartButton(),
-          Padding(padding: EdgeInsets.all(5)),
-          _statGame(),
-        ],
+          ],
+        ),
       ),
     );
   }

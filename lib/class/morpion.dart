@@ -5,6 +5,8 @@ class Morpion {
   static int scoreJ1 = 0;
   static int scoreJ2 = 0;
 
+  static String phraseResult = "";
+
   // Fonction pour calculer les probabilités
   static List<double> calculerProbabilite(int scoreJoueur1, int scoreJoueur2) {
     int totalScores = scoreJoueur1 + scoreJoueur2;
@@ -15,6 +17,15 @@ class Morpion {
   }
   
   static int bestScore = 0;
+
+  static int getBestScore(){
+    if(scoreJ1 > scoreJ2){
+      bestScore = scoreJ1;
+    } else if(scoreJ2 > scoreJ1){
+      bestScore = scoreJ2;
+    }
+    return bestScore;
+  }
 
   static String currentPlayer = "";
   static bool gameEnd = false;
@@ -29,6 +40,7 @@ class Morpion {
   static void initScore(){
     scoreJ1 = 0;
     scoreJ2 = 0;
+    bestScore = 0;
   }
 
   static String headerText(){
@@ -49,16 +61,13 @@ class Morpion {
     List<double> probabilites = calculerProbabilite(scoreJ1, scoreJ2);
     double probabiliteJoueur1 = probabilites[0];
     String result = probabiliteJoueur1.toStringAsFixed(2);
-    return result;
+    return "$result %";
   }
 
   static String probaVictoireJ2(){
     List<double> probabilites = calculerProbabilite(scoreJ1, scoreJ2);
     double probabiliteJoueur2 = probabilites[1];
     String result = probabiliteJoueur2.toStringAsFixed(2);
-    return result;
-  }
-
-  
-    
+    return "$result %";
+  } 
 }
