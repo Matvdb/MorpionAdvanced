@@ -2,29 +2,43 @@ class Morpion {
   static String joueur1 = "X";
   static String joueur2 = "O";
 
-  static int scoreJ1 = 0;
-  static int scoreJ2 = 0;
+  static double scoreJ1 = 0;
+  static double scoreJ2 = 0;
+
+  static double bestScore = 0;
 
   static String phraseResult = "";
 
   // Fonction pour calculer les probabilités
-  static List<double> calculerProbabilite(int scoreJoueur1, int scoreJoueur2) {
-    int totalScores = scoreJoueur1 + scoreJoueur2;
+  static List<double> calculerProbabilite(double scoreJoueur1, double scoreJoueur2) {
+    double totalScores = scoreJoueur1 + scoreJoueur2;
     double probabiliteJoueur1 = scoreJoueur1 / totalScores;
     double probabiliteJoueur2 = scoreJoueur2 / totalScores;
 
     return [probabiliteJoueur1, probabiliteJoueur2];
   }
-  
-  static int bestScore = 0;
 
-  static int getBestScore(){
+  static String getScoreJ1(){
+    String takeScoreJ1 = "";
+    takeScoreJ1 = scoreJ1.toStringAsFixed(0);
+    return takeScoreJ1.toString();
+  }
+
+  static String getScoreJ2(){
+    String takeScoreJ2 = "";
+    takeScoreJ2 = scoreJ2.toStringAsFixed(0);
+    return takeScoreJ2.toString();
+  }
+
+  static String getBestScore(){
+    String takeBestScore = "";
     if(scoreJ1 > scoreJ2){
       bestScore = scoreJ1;
     } else if(scoreJ2 > scoreJ1){
       bestScore = scoreJ2;
     }
-    return bestScore;
+    takeBestScore = bestScore.toStringAsFixed(0);
+    return takeBestScore.toString();
   }
 
   static String currentPlayer = "";

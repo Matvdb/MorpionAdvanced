@@ -2,9 +2,11 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:morpion/class/graphic.dart';
+import 'package:morpion/class/GraphCircData.dart';
 import 'package:morpion/class/morpion.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:morpion/class/myBarGraph.dart';
+import 'package:morpion/class/myCircularGraph.dart';
 import 'package:morpion/ecran/home.dart';
 
 class Game extends StatefulWidget {
@@ -15,11 +17,31 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
+  MyCircularGraph _circularGraph = MyCircularGraph();
+  MyBarGraph _myBarGraph = MyBarGraph(scores: [],);
+
+  Center graph = Center();
+  int i = 1;
 
   @override
   void initState(){
     Morpion.initGame();
     super.initState();
+  }
+
+  _afficheGraph(){
+      switch (i) {
+        case 1:
+          graph = Center(child: MyCircularGraph(),);      
+          break;
+
+        case 2:
+          graph = Center(child: MyBarGraph(scores: [Morpion.scoreJ1, Morpion.scoreJ2]));
+          break;
+
+        default: 
+      }
+    return graph;
   }
 
   _gameContainer(){
@@ -172,8 +194,8 @@ class _GameState extends State<Game> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(Morpion.scoreJ1.toString()),
-                        Text(Morpion.scoreJ2.toString()),
+                        Text(Morpion.getScoreJ1().toString()),
+                        Text(Morpion.getScoreJ2().toString()),
                       ],
                     ),
                     const Padding(padding: EdgeInsets.all(15)),
@@ -182,6 +204,29 @@ class _GameState extends State<Game> {
                     const Padding(padding: EdgeInsets.all(5)),
                     Text("Probabilité que ${Morpion.joueur2} gagne la partie:", style: const TextStyle(fontSize: 13.0),),
                     Text(Morpion.probaVictoireJ2().toString(), style: const TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),),
+                    const Padding(padding: EdgeInsets.all(30)),
+                    Center(
+                      child: SizedBox(
+                        height: 200,
+                        child: _afficheGraph(),
+                      ),
+                    ),
+                    const Padding(padding: EdgeInsets.all(10)),
+                    ElevatedButton(
+                      onPressed: (){
+                        setState(() {
+                          Navigator.of(context).pop();
+                          _stats();
+                          if(i == 1){
+                            i = 2;
+                          } else {
+                            i = 1;
+                          }
+                          _afficheGraph();
+                        });
+                      }, 
+                      child: const Text("Changer de graph")
+                    ),
                   ],
                 ),
               );
@@ -265,13 +310,13 @@ class _GameState extends State<Game> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(Morpion.scoreJ1.toString(),
+                  Text(Morpion.getScoreJ1().toString(),
                     style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(Morpion.scoreJ2.toString(),
+                  Text(Morpion.getScoreJ2().toString(),
                     style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,

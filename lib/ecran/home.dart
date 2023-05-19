@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:morpion/class/morpion.dart';
 import 'package:morpion/ecran/game.dart';
@@ -12,7 +13,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool isSelected = false;
 
   final Container _jouerSolo = Container(
     height: 100,
@@ -31,6 +31,27 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
     child: const Icon(Icons.group),
   );
+
+  List<Container> mesContainers = [
+    Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.orange),
+      child: const Text("Le jeu du Morpion"),
+    ),
+    Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.green),
+      child: const Text("Jouez avec un ami"),
+    ),
+    Container(
+      height: 100,
+      width: 100,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.pink),
+      child: const Text("Amusez-vous"),
+    ),
+  ];
 
   Future<void> _selectionMode() async {
     return showDialog<void>(
@@ -86,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.cyan,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -102,6 +124,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Theme.of(context).primaryColor,
               ),
               child: Text(widget.title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20.0),),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.3,),
+            CarouselSlider(
+              items: mesContainers, 
+              options: CarouselOptions(
+                autoPlay: true,
+                enlargeCenterPage: false,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                height: 100,
+              )
             ),
           ],
         ),
